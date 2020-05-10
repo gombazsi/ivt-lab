@@ -7,6 +7,10 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<sonar.projectKey>gombazsi_ivt-lab</sonar.projectKey>
+  		<sonar.organization>gombazsi</sonar.organization>
+  		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
+  		<sonar.login>a1eeffb7cc5fe4d5515c2c74171d3d32fe44d58e</sonar.login>
 	</properties>
 
 	<dependencies>
