@@ -5,8 +5,8 @@ package hu.bme.mit.spaceship;
 */
 public class GT4500 implements SpaceShip {
 
-  private TorpedoStore primaryTorpedoStore;
-  private TorpedoStore secondaryTorpedoStore;
+  private final TorpedoStore primaryTorpedoStore;
+  private final TorpedoStore secondaryTorpedoStore;
 
   private boolean wasPrimaryFiredLast = false;
 
@@ -15,31 +15,31 @@ public class GT4500 implements SpaceShip {
     this.secondaryTorpedoStore = new TorpedoStore(10);
   }
 
-  public boolean fireLaser(FiringMode firingMode) {
+  public boolean fireLaser(final FiringMode firingMode) {
     // TODO not implemented yet
+
     return false;
   }
 
   /**
-  * Tries to fire the torpedo stores of the ship.
-  *
-  * @param firingMode how many torpedo bays to fire
-  * 	SINGLE: fires only one of the bays.
-  * 			- For the first time the primary store is fired.
-  * 			- To give some cooling time to the torpedo stores, torpedo stores are fired alternating.
-  * 			- But if the store next in line is empty, the ship tries to fire the other store.
-  * 			- If the fired store reports a failure, the ship does not try to fire the other one.
-  * 	ALL:	tries to fire both of the torpedo stores.
-  *
-  * @return whether at least one torpedo was fired successfully
-  */
+   * Tries to fire the torpedo stores of the ship.
+   *
+   * @param firingMode how many torpedo bays to fire SINGLE: fires only one of the
+   *                   bays. - For the first time the primary store is fired. - To
+   *                   give some cooling time to the torpedo stores, torpedo
+   *                   stores are fired alternating. - But if the store next in
+   *                   line is empty, the ship tries to fire the other store. - If
+   *                   the fired store reports a failure, the ship does not try to
+   *                   fire the other one. ALL: tries to fire both of the torpedo
+   *                   stores.
+   *
+   * @return whether at least one torpedo was fired successfully
+   */
   @Override
-  public boolean fireTorpedo(FiringMode firingMode) {
+  public boolean fireTorpedo(final FiringMode firingMode) {
 
     boolean firingSuccess = false;
-
-    switch (firingMode) {
-      case SINGLE:
+    if (firingMode==FiringMode.SINGLE) {      
         if (wasPrimaryFiredLast) {
           // try to fire the secondary first
           if (! secondaryTorpedoStore.isEmpty()) {
@@ -74,30 +74,10 @@ public class GT4500 implements SpaceShip {
             // if both of the stores are empty, nothing can be done, return failure
           }
         }
-        break;
-
-      case ALL:
-        // try to fire both of the torpedo stores
-        //TODO implement feature
-
-        /*if(!primaryTorpedoStore.isEmpty())
-          firingSuccess=primaryTorpedoStore.fire(1);
-        else
-          firingSuccess=false;
-        if(!secondaryTorpedoStore.isEmpty()){
-          bool secondOK=secondaryTorpedoStore.fire(1);
-          if(secondOK){
-            wasPrimaryFiredLast=false;
-          }
-          else
-            firingSuccess=false;
-        }
-        else
-            firingSuccess=false;*/
-          firingSuccess=primaryTorpedoStore.fire(1)&&secondaryTorpedoStore.fire(2);
-        
-        break;
-    }
+      }
+      else if(firingMode==FiringMode.ALL){
+        firingSuccess=primaryTorpedoStore.fire(1)&&secondaryTorpedoStore.fire(2);
+      }
 
     return firingSuccess;
   }
